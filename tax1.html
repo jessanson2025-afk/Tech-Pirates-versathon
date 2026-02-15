@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxWise India - Professional Tax Calculator FY 2025-26</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tax.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TaxWise India</h1>
+            <p>Income Tax + Professional Tax Calculator | FY 2025-26 (AY 2026-27)</p>
+        </header>
+
+        <div class="input-section">
+            <form id="calcForm">
+                <div>
+                    <input type="number" id="income" placeholder="Enter annual income (₹)" min="0" step="1000" required>
+                    <label for="income">Annual Income (₹)</label>
+                </div>
+                <div>
+                    <select id="regime" required>
+                        <option value="">Select tax regime</option>
+                        <option value="new">New Regime</option>
+                        <option value="old">Old Regime</option>
+                    </select>
+                    <label for="regime">Tax Regime</label>
+                </div>
+                <div>
+                    <select id="age" required>
+                        <option value="">Select age group</option>
+                        <option value="below60">Below 60 years</option>
+                        <option value="60to80">60-80 years</option>
+                        <option value="above80">Above 80 years</option>
+                    </select>
+                    <label for="age">Age Group (Old Regime only)</label>
+                </div>
+                <div>
+                    <select id="profession" required>
+                        <option value="">Select profession</option>
+                        <option value="salaried">Salaried Employee</option>
+                        <option value="freelancer">Freelancer</option>
+                        <option value="business">Business Owner</option>
+                        <option value="farmer">Farmer 🌾</option>
+                    </select>
+                    <label for="profession">Profession</label>
+                </div>
+                <div>
+                    <select id="state" required>
+                        <option value="">Select state</option>
+                        <option value="karnataka">Karnataka</option>
+                        <option value="maharashtra">Maharashtra</option>
+                        <option value="gujarat">Gujarat</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="tamilnadu">Tamil Nadu</option>
+                    </select>
+                    <label for="state">State (Professional Tax)</label>
+                </div>
+                <button type="submit">Calculate Complete Tax Liability</button>
+            </form>
+        </div>
+
+        <div class="results" id="results">
+            <div class="main-content">
+                <div>
+                    <h3>Total Tax Liability</h3>
+                    <div class="tax-section">
+                        <div>
+                            <div class="amount" id="totalTaxAmount">₹0</div>
+                            <div class="tax-breakdown" id="taxBreakdown"></div>
+                        </div>
+                        <canvas id="taxChart" class="tax-chart-container"></canvas>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Expense & Tax Summary</h3>
+                    <div class="expense-summary">
+                        <table class="summary-table">
+                            <thead>
+                                <tr><th>Category</th><th>Monthly ₹</th><th>Annual ₹</th><th>%</th></tr>
+                            </thead>
+                            <tbody id="summaryTable"></tbody>
+                        </table>
+                        <canvas id="expenseChart" class="expense-pie-container"></canvas>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>Detailed Monthly Expenses</h3>
+                    <div class="detailed-breakdown" id="detailedExpenses"></div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div>
+                    <h3>Financial Snapshot</h3>
+                    <div class="savings-growth">
+                        <div class="growth-label">Monthly Savings Potential</div>
+                        <div class="growth-bar" id="growthBar"></div>
+                    </div>
+                    <div id="snapshot"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            Updated FY 2025-26: New Income Tax slabs + State-wise Professional Tax. Farmers exempt from Professional Tax. All amounts in Indian Rupees (₹).
+        </div>
+    </div>
+
+    <script src="tax.js"></script>
+</body>
+</html>
