@@ -1,0 +1,143 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #061C3F, #0B4F9C);
+}
+
+.dashboard {
+  max-width: 1250px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 30px 60px rgba(0,0,0,.4);
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0B4F9C;
+}
+
+.logo svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* LAYOUT */
+.content {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 2.6fr 1fr;
+  gap: 30px;
+}
+
+/* INCOME */
+.income-box {
+  background: #F1F5F9;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+.income-box input {
+  width: 260px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+}
+
+/* CATEGORY */
+.category {
+  margin-bottom: 25px;
+}
+
+.category-title {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #0B4F9C;
+}
+
+/* TASK */
+.task {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.task input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #CBD5E1;
+}
+
+.bar-bg {
+  grid-column: span 2;
+  background: #E2E8F0;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.bar {
+  height: 14px;
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+/* COLORS */
+.fixed {
+  background: linear-gradient(90deg, #0B4F9C, #0A66C2);
+}
+.variable {
+  background: linear-gradient(90deg, #22C55E, #16A34A);
+}
+.debt {
+  background: linear-gradient(90deg, #EF4444, #DC2626);
+}
+.savings {
+  background: linear-gradient(90deg, #F59E0B, #D97706);
+}
+
+/* ADD */
+.add {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #0B4F9C;
+  cursor: pointer;
+}
+
+/* RIGHT */
+.pie-box {
+  text-align: center;
+}
+
+.summary {
+  margin-top: 15px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.green {
+  color: #16A34A;
+}
+
+.red {
+  color: #DC2626;
+}
