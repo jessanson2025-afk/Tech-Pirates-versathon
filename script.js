@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     const signupForm = document.getElementById('signupForm');
     const profileForm = document.getElementById('profileForm');
+    const financialForm = document.getElementById('financialForm');
 
     // Get current session user
     const sessionUserKey = localStorage.getItem('finwise_session_user');
@@ -91,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadTransactions();
     }
 
-    // Settings Toggle Logic
+    // Settings Toggle Logic - DEPRECATED since we moved to settings.html, but keeping for backward compatibility if index.html isn't fully updated in all places
     const settingsToggle = document.getElementById('settingsToggle');
     const settingsSubmenu = document.getElementById('settingsSubmenu');
 
@@ -109,10 +110,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         const settingsIcon = document.getElementById('settingsIcon');
         const settingsDropdown = document.getElementById('settingsDropdown');
+        const financialModal = document.getElementById('financialModal');
+
         if (settingsIcon && settingsDropdown) {
             if (!settingsIcon.contains(e.target) && !settingsDropdown.contains(e.target)) {
                 settingsDropdown.classList.remove('active');
             }
+        }
+
+        if (financialModal && e.target === financialModal) {
+            closeFinancialModal();
         }
     });
 
@@ -183,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // PROFILE FORM
+    // PROFILE FORM (Full Setup)
     if (profileForm) {
         profileForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -218,6 +225,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 .catch(error => {
                     console.error("Profile Save Error:", error);
                     alert("Failed to save profile. Try again.");
+                });
+        });
+    }
+
+    // FINANCIAL MODAL FORM (Partial Update)
+    if (financialForm) {
+        financialForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const userKey = localStorage.getItem('finwise_session_user');
+            if (!userKey) {
+                alert("No active session. Please login again.");
+                return;
+            }
+
+            // Get existing profile to merge correctly if needed (though PATCH handles partials)
+            // We just need to send the fields we want to update.
+            const financialData = {
+                monthlySalary: document.getElementById('finMonthlySalary').value,
+                otherIncome: document.getElementById('finOtherIncome').value,
+                monthlyExpenses: document.getElementById('finMonthlyExpenses').value,
+                totalSavings: document.getElementById('finTotalSavings').value
+            };
+
+            // Retrieve current cache to update it locally
+            const cachedProfileStr = localStorage.getItem('finwise_user_profile_cache');
+            let currentProfile = cachedProfileStr ? JSON.parse(cachedProfileStr) : {};
+
+            // Merge local cache
+            const updatedProfile = { ...currentProfile, ...financialData };
+
+            fetch(`${FIREBASE_URL}/users/${userKey}/profile.json`, {
+                method: 'PATCH',
+                body: JSON.stringify(financialData)
+            })
+                .then(() => {
+                    localStorage.setItem('finwise_user_profile_cache', JSON.stringify(updatedProfile));
+                    alert("Financial details updated successfully!");
+                    closeFinancialModal();
+                    // We might want to refresh the dashboard if we were on index.html, 
+                    // but since we are likely on settings.html (or if we are on index.html, we should reload)
+                    // If on index.html, reload to update charts
+                    if (window.location.pathname.includes('index.html')) {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error("Financial Update Error:", error);
+                    alert("Failed to update financials. Try again.");
                 });
         });
     }
@@ -290,6 +346,47 @@ function openProfileModal() {
 
 function closeProfileModal() {
     const modal = document.getElementById('profileModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+function openFinancialModal() {
+    const modal = document.getElementById('financialModal');
+    const profileDataStr = localStorage.getItem('finwise_user_profile_cache');
+
+    if (modal) {
+        // Pre-fill inputs
+        if (profileDataStr) {
+            const data = JSON.parse(profileDataStr);
+            document.getElementById('finMonthlySalary').value = data.monthlySalary || '';
+            document.getElementById('finOtherIncome').value = data.otherIncome || '';
+            document.getElementById('finMonthlyExpenses').value = data.monthlyExpenses || '';
+            document.getElementById('finTotalSavings').value = data.totalSavings || '';
+        } else {
+            // Fetch if not in cache
+            const userKey = localStorage.getItem('finwise_session_user');
+            if (userKey) {
+                fetch(`${FIREBASE_URL}/users/${userKey}/profile.json`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data) {
+                            localStorage.setItem('finwise_user_profile_cache', JSON.stringify(data));
+                            document.getElementById('finMonthlySalary').value = data.monthlySalary || '';
+                            document.getElementById('finOtherIncome').value = data.otherIncome || '';
+                            document.getElementById('finMonthlyExpenses').value = data.monthlyExpenses || '';
+                            document.getElementById('finTotalSavings').value = data.totalSavings || '';
+                        }
+                    });
+            }
+        }
+
+        modal.classList.add('active');
+    }
+}
+
+function closeFinancialModal() {
+    const modal = document.getElementById('financialModal');
     if (modal) {
         modal.classList.remove('active');
     }

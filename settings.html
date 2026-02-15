@@ -143,6 +143,17 @@
                     </div>
                 </div>
 
+                <!-- Financial Settings Card -->
+                <div class="setting-card" onclick="openFinancialModal()">
+                    <div class="setting-icon" style="background: #ecfccb; color: #65a30d;">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="setting-info">
+                        <h4>Financial Settings</h4>
+                        <p>Update income, expenses & savings</p>
+                    </div>
+                </div>
+
                 <!-- Logout Card -->
                 <div class="setting-card" onclick="logout()">
                     <div class="setting-icon" style="background: #fee2e2; color: #ef4444;">
@@ -158,7 +169,7 @@
         </main>
     </div>
 
-    <!-- Profile Modal (copied from index.html for consistency) -->
+    <!-- Profile Modal -->
     <div class="modal-overlay" id="profileModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -168,6 +179,39 @@
             <div id="profileDetails">
                 <!-- Profile details injected here -->
             </div>
+        </div>
+    </div>
+
+    <!-- Financial Modal -->
+    <div class="modal-overlay" id="financialModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Update Financials</h3>
+                <button class="close-modal" onclick="closeFinancialModal()">&times;</button>
+            </div>
+            <form id="financialForm">
+                <div class="profile-field">
+                    <label class="profile-label" for="finMonthlySalary">Monthly Salary (₹)</label>
+                    <input type="number" id="finMonthlySalary" class="profile-value"
+                        style="width: 100%; border: 1px solid #ddd;" required>
+                </div>
+                <div class="profile-field">
+                    <label class="profile-label" for="finOtherIncome">Other Income (₹)</label>
+                    <input type="number" id="finOtherIncome" class="profile-value"
+                        style="width: 100%; border: 1px solid #ddd;">
+                </div>
+                <div class="profile-field">
+                    <label class="profile-label" for="finMonthlyExpenses">Monthly Expenses (₹)</label>
+                    <input type="number" id="finMonthlyExpenses" class="profile-value"
+                        style="width: 100%; border: 1px solid #ddd;" required>
+                </div>
+                <div class="profile-field">
+                    <label class="profile-label" for="finTotalSavings">Total Savings (₹)</label>
+                    <input type="number" id="finTotalSavings" class="profile-value"
+                        style="width: 100%; border: 1px solid #ddd;" required>
+                </div>
+                <button type="submit" class="btn" style="margin-top: 10px;">Save Changes</button>
+            </form>
         </div>
     </div>
 
