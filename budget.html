@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FinWise | Budget Planner</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="budget.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0B4F9C" stroke-width="2">
+        <path d="M3 3v18h18"/>
+        <polyline points="6,14 10,10 14,13 18,7"/>
+      </svg>
+      FinWise
+    </div>
+    <strong>📊 Budget Planner</strong>
+  </div>
+
+  <div class="content">
+
+    <!-- LEFT -->
+    <div>
+
+      <div class="income-box">
+        <strong>Total Monthly Income (₹)</strong><br>
+        <input type="number" id="income">
+      </div>
+
+      <div class="category">
+        <div class="category-title">
+          🏠 Fixed Costs
+          <span class="add" onclick="addTask('fixed')">+ Add Task</span>
+        </div>
+        <div id="fixed"></div>
+      </div>
+
+      <div class="category">
+        <div class="category-title">
+          🛒 Variable Costs
+          <span class="add" onclick="addTask('variable')">+ Add Task</span>
+        </div>
+        <div id="variable"></div>
+      </div>
+
+      <div class="category">
+        <div class="category-title">
+          💳 Debt Payments
+          <span class="add" onclick="addTask('debt')">+ Add Task</span>
+        </div>
+        <div id="debt"></div>
+      </div>
+
+      <div class="category">
+        <div class="category-title">
+          💰 Savings
+          <span class="add" onclick="addTask('savings')">+ Add Task</span>
+        </div>
+        <div id="savings"></div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="pie-box">
+      <h3>Expense Distribution</h3>
+      <canvas id="pie" width="240" height="240"></canvas>
+      <div class="summary" id="summary"></div>
+    </div>
+
+  </div>
+</div>
+
+<script src="budget.js"></script>
+</body>
+</html>
